@@ -7,14 +7,13 @@ const keys = require("./keys.js");
 const Spotify = require("node-spotify-api");
 //Variales======================================
 const spotify = new Spotify(keys.spotifyKeys);
-
 let request = process.argv[2];
 let query = process.argv[3];
 //function for spotify=====================================================
 function spotifySongInfo() {
   spotify.search({ type: "track", query: query }, function(err, data) {
     if (err) {
-      return console.log("Error occurred: " + err);
+      return console.log("Sorry, there was a Problem. Error: " + err);
     }
 
     console.log("Song: " + data.tracks.items[0].name);
@@ -36,12 +35,10 @@ function concertVenue() {
         "&client_id=MTg3MDE5NDJ8MTU3MDI0NzEzOC40Ng"
     )
     .then(function(response) {
-      // console.log(response.data.venue.location);
       console.log("Venue: " + response.data.events[0].venue.name);
       console.log(
         "Location: " + response.data.events[0].venue.display_location
       );
-      // Date of the Event (use moment to format this as "MM/DD/YYYY")
       console.log(
         "Date: " +
           moment().format("MM/DD/YYYY", response.data.events[0].datetime_utc)
@@ -69,7 +66,7 @@ function movieInfo() {
 if (request == "do-what-it-says") {
   fs.readFile("random.txt", "utf8", function(error, data) {
     if (error) {
-      return console.log(error);
+      return console.log("Sorry, there was a problem");
     }
 
     const dataArr = data.split(",");
