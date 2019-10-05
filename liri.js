@@ -72,7 +72,7 @@ if (request == "do-what-it-says") {
     const dataArr = data.split(",");
     request = dataArr[0];
     query = dataArr[1];
-    console.log(dataArr);
+
     spotifySongInfo();
   });
 }
