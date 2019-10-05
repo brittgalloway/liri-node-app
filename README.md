@@ -3,6 +3,16 @@
 LIRI is a CLI App that finds infomation on song titles via Spotify, an artist's concert via Seat Geek, and find information on a movie title via OMDB.
 With this app you can searh your favorite song, find the artist name, then look for a concert date and location. Or you can learn the stats of your favorite (maybe least favorite?) movie.
 
+## Technologies
+
+node.js
+Node-Spotify-API
+Axios
+OMDB API
+SeatGeek API
+Moment(via npm)
+DotEnv
+
 ## How To Use Liri
 
 You can serch for 3 things. A song, a concert, or a movie.
@@ -17,27 +27,46 @@ For mulity word song title Please use quotes
 EXAMPLE
 spotify-this-song "On Top of the World"
 
+You will get this output:
+
+     * Artist(s)
+     * The song's name
+     * A preview link of the song from Spotify
+     * The album that the song is from
+
 ## Concerts
 
-To search for a concert, you must type concert-this + artistName
+To search for a concert, you must type: concert-this + artistName
 EXAMPLE
 concert-this Yuna
 
-concert-this
+You will get this output:
 
-## Submission Guide
+     * Name of the venue
+     * Venue location
+     * Date of the Event
 
-Create and use a standard GitHub repository. As this is a CLI App, it cannot be deployed to GitHub pages or Heroku. This time you'll need to include screenshots, a GIF, and/or a video showing us that you have the app working with no bugs. You can include these screenshots/GIFs or a link to a video in a `README.md` file.
-In order to meet the Employer Competitive standards and be ready to show your application to employers, the `README.md` file should meet the following criteria:
+## Movies
 
-1. Clearly state the problem the app is trying to solve (i.e. what is it doing and why)
-2. Give a high-level overview of how the app is organized
-3. Give start-to-finish instructions on how to run the app
-4. Include screenshots, gifs or videos of the app functioning
+To search for a movie, you must type: movie-this + movieTitle
+EXAMPLE
+movie-this Big
 
-5. Clearly list the technologies used in the app
-6. State your role in the app development
+You will get this output:
 
-Because screenshots (and well-written READMEs) are extremely important in the context of GitHub, this will be part of the grading in this assignment.
+       * Title of the movie.
+       * Year the movie came out.
+       * IMDB Rating of the movie.
+       * Rotten Tomatoes Rating of the movie.
+       * Country where the movie was produced.
+       * Language of the movie.
+       * Plot of the movie.
+       * Actors in the movie.
 
-If you haven't written a markdown file yet, [click here for a rundown](https://guides.github.com/features/mastering-markdown/), or just take a look at the raw file of these instructions.
+If you don't know what to search for, you can type: do-what-it-says
+This will read the text in a file and search the contents for you.
+The output will mimic which ever call it makes.
+
+## App in action
+
+https://drive.google.com/file/d/1uvsn3B_VEZiOCB12kgMSwsVJP3jRroZx/view
