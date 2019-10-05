@@ -2,54 +2,62 @@ require("dotenv").config();
 const axios = require("axios");
 
 const keys = require("./keys.js");
-const spotify = new Spotify(keys.spotify);
+// const spotify = new Spotify(keys.spotify);
+const spotify = require("node-spotify-api");
 
-// concert-this  : seatgeek
-// spotify-this-song : spotify
-// movie-this : Omdbapi
-// do-what-it-says :
 //
 // MOVIE API ==========================================================
 //
-// Artist(s)
-// The song's name
-// A preview link of the song from Spotify
-// The album that the song is from
-//
-let movie = "Mr. Nobody";
-axios
-  .get("http://www.omdbapi.com/?t=" + movie + "&apikey=trilogy")
-  .then(function(response) {
-    console.log("The movie's rating is: " + response.data.imdbRating);
-    //   * Title of the movie.
-    //  * Year the movie came out.
-    //  * IMDB Rating of the movie.
-    //  * Rotten Tomatoes Rating of the movie.
-    //  * Country where the movie was produced.
-    //  * Language of the movie.
-    //  * Plot of the movie.
-    //  * Actors in the movie.
-  });
+if (process.argv[2] == "movie-this") {
+  let movie = process.argv[3];
+  axios
+    .get("http://www.omdbapi.com/?t=" + movie + "&apikey=trilogy")
+    .then(function(response) {
+      console.log("Title: " + response.data.Title);
+      console.log("Release Year: " + response.data.Year);
+      console.log("IMBD rating: " + response.data.imdbRating);
+      console.log("Rotten Tomatos: " + response.data.Ratings[1].Value);
+      console.log("Country: " + response.data.Country);
+      console.log("Language: " + response.data.Language);
+      console.log("Plot: " + response.data.Plot);
+      console.log("Actors/Actresses: " + response.data.Actors);
+    });
+}
 // MUSIC API=========================================================
 //
 // Name of the venue
 // Venue location
 // Date of the Event (use moment to format this as "MM/DD/YYYY")
 //
-let artist = axios
-  .get(
-    "https://api.seatgeek.com/2/events?performers.slug=" +
-      artist +
-      "&client_id=<MTg3MDE5NDJ8MTU3MDE2MzI1Mi41OA>"
-  )
-  .then(function(response) {
-    console.log("The artist is " + response.data.artist);
-  });
+if (process.argv[2] == "concert-this") {
+  let artist = process.argv[3];
+  axios
+    .get(
+      "https://api.seatgeek.com/2/events?performers.slug=" +
+        artist +
+        "&client_id=<MTg3MDE5NDJ8MTU3MDE2MzI1Mi41OA>"
+    )
+    .then(function(response) {
+      console.log("The artist is " + response.data);
+    });
+}
 //SPOTIFY=============================================================
 //   Artist(s)
 // The song's name
 // A preview link of the song from Spotify
 // The album that the song is from
+if (process.argv[2] == "spotify-this-song") {
+  spotify.search({ type: "track", query: "All the Small Things" }, function(
+    err,
+    data
+  ) {
+    if (err) {
+      return console.log("Error occurred: " + err);
+    }
+
+    console.log(data);
+  });
+}
 //====================================================================
 // node liri.js do-what-it-says
 
@@ -57,3 +65,5 @@ let artist = axios
 
 // It should run spotify-this-song for "I Want it That Way," as follows the text in random.txt.
 // Edit the text in random.txt to test out the feature for movie-this and concert-this.
+if (process.argv[2] == "do-what-it-says") {
+}
