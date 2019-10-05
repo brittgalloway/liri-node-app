@@ -1,20 +1,17 @@
 require("dotenv").config();
 const axios = require("axios");
-
+const fs = require("fs");
 const keys = require("./keys.js");
 const Spotify = require("node-spotify-api");
 const spotify = new Spotify(keys.spotifyKeys);
-
-//SPOTIFY=============================================================
-
-if (process.argv[2] == "spotify-this-song") {
-  spotify.search({ type: "track", query: process.argv[3] }, function(
-    err,
-    data
-  ) {
+let request = process.argv[2];
+let query = process.argv[3];
+function spotifySongInfo() {
+  spotify.search({ type: "track", query: query }, function(err, data) {
     if (err) {
       return console.log("Error occurred: " + err);
     }
+
     console.log("Song: " + data.tracks.items[0].name);
     console.log("Artist: " + data.tracks.items[0].album.artists[0].name);
 
@@ -24,27 +21,8 @@ if (process.argv[2] == "spotify-this-song") {
     console.log("Album Name: " + data.tracks.items[0].album.name);
   });
 }
-// MOVIE API ==========================================================
-//
-if (process.argv[2] == "movie-this") {
-  let movie = process.argv[3];
-  axios
-    .get("http://www.omdbapi.com/?t=" + movie + "&apikey=trilogy")
-    .then(function(response) {
-      console.log("Title: " + response.data.Title);
-      console.log("Release Year: " + response.data.Year);
-      console.log("IMBD rating: " + response.data.imdbRating);
-      console.log("Rotten Tomatos: " + response.data.Ratings[1].Value);
-      console.log("Country: " + response.data.Country);
-      console.log("Language: " + response.data.Language);
-      console.log("Plot: " + response.data.Plot);
-      console.log("Actors/Actresses: " + response.data.Actors);
-    });
-}
-// MUSIC API=========================================================
-
-if (process.argv[2] == "concert-this") {
-  let artist = process.argv[3];
+function concertVenue() {
+  let artist = query;
   axios
     .get(
       "https://api.seatgeek.com/2/events?performers.slug=" +
@@ -61,6 +39,21 @@ if (process.argv[2] == "concert-this") {
       console.log("Date: " + response.data.events[0].datetime_utc);
     });
 }
+function movieInfo() {
+  let movie = query;
+  axios
+    .get("http://www.omdbapi.com/?t=" + movie + "&apikey=trilogy")
+    .then(function(response) {
+      console.log("Title: " + response.data.Title);
+      console.log("Release Year: " + response.data.Year);
+      console.log("IMBD rating: " + response.data.imdbRating);
+      console.log("Rotten Tomatos: " + response.data.Ratings[1].Value);
+      console.log("Country: " + response.data.Country);
+      console.log("Language: " + response.data.Language);
+      console.log("Plot: " + response.data.Plot);
+      console.log("Actors/Actresses: " + response.data.Actors);
+    });
+}
 
 //====================================================================
 // node liri.js do-what-it-says
@@ -69,5 +62,32 @@ if (process.argv[2] == "concert-this") {
 
 // It should run spotify-this-song for "I Want it That Way," as follows the text in random.txt.
 // Edit the text in random.txt to test out the feature for movie-this and concert-this.
-if (process.argv[2] == "do-what-it-says") {
+if (request == "do-what-it-says") {
+  fs.readFile("random.txt", "utf8", function(error, data) {
+    if (error) {
+      return console.log(error);
+    }
+
+    const dataArr = data.split(",");
+    request = dataArr[0];
+    query = dataArr[1];
+    console.log(dataArr);
+    spotifySongInfo();
+  });
+}
+//SPOTIFY=============================================================
+
+if (request == "spotify-this-song") {
+  spotifySongInfo();
+}
+
+// MOVIE API ==========================================================
+//
+if (request == "movie-this") {
+  movieInfo();
+}
+// MUSIC API=========================================================
+
+if (request == "concert-this") {
+  concertVenue();
 }
