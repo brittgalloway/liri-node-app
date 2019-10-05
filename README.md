@@ -67,6 +67,6 @@ If you don't know what to search for, you can type: do-what-it-says
 This will read the text in a file and search the contents for you.
 The output will mimic which ever call it makes.
 
-## App in action
+## App in Action
 
 https://drive.google.com/file/d/1uvsn3B_VEZiOCB12kgMSwsVJP3jRroZx/view
