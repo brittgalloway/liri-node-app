@@ -2,10 +2,30 @@ require("dotenv").config();
 const axios = require("axios");
 
 const keys = require("./keys.js");
-// const spotify = new Spotify(keys.spotify);
-const spotify = require("node-spotify-api");
+const Spotify = require("node-spotify-api");
+const spotify = new Spotify(keys.spotifyKeys);
 
-//
+//SPOTIFY=============================================================
+//   Artist(s)
+// The song's name
+// A preview link of the song from Spotify
+// The album that the song is from
+if (process.argv[2] == "spotify-this-song") {
+  spotify.search({ type: "track", query: process.argv[3], limit: 5 }, function(
+    err,
+    data
+  ) {
+    if (err) {
+      return console.log("Error occurred: " + err);
+    }
+
+    console.log("Song Name: " + data.tracks.items[0].album.name);
+    console.log(
+      "Preview Song: " + data.tracks.items[0].album.external_urls.spotify
+    );
+    console.log(data.tracks.items[0].album);
+  });
+}
 // MOVIE API ==========================================================
 //
 if (process.argv[2] == "movie-this") {
@@ -41,26 +61,9 @@ if (process.argv[2] == "concert-this") {
       );
       // Date of the Event (use moment to format this as "MM/DD/YYYY")
       console.log("Date: " + response.data.events[0].datetime_utc);
-      // console.log(response.data);
     });
 }
-//SPOTIFY=============================================================
-//   Artist(s)
-// The song's name
-// A preview link of the song from Spotify
-// The album that the song is from
-if (process.argv[2] == "spotify-this-song") {
-  spotify.search({ type: "track", query: "All the Small Things" }, function(
-    err,
-    data
-  ) {
-    if (err) {
-      return console.log("Error occurred: " + err);
-    }
 
-    console.log(data);
-  });
-}
 //====================================================================
 // node liri.js do-what-it-says
 
