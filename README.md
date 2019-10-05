@@ -2,16 +2,6 @@
 
 LIRI will search Spotify for songs, Bands in Town for concerts, and OMDB for movies.
 
-- [Node-Spotify-API](https://www.npmjs.com/package/node-spotify-api)
-
-- [Axios](https://www.npmjs.com/package/axios)
-
-  - You'll use Axios to grab data from the [OMDB API](http://www.omdbapi.com) and the [Bands In Town API](http://www.artists.bandsintown.com/bandsintown-api)
-
-- [Moment](https://www.npmjs.com/package/moment)
-
-- [DotEnv](https://www.npmjs.com/package/dotenv)
-
 ## Submission Guide
 
 Create and use a standard GitHub repository. As this is a CLI App, it cannot be deployed to GitHub pages or Heroku. This time you'll need to include screenshots, a GIF, and/or a video showing us that you have the app working with no bugs. You can include these screenshots/GIFs or a link to a video in a `README.md` file.

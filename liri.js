@@ -1,11 +1,16 @@
+// Required npms===============================
 require("dotenv").config();
 const axios = require("axios");
 const fs = require("fs");
+const moment = require("moment");
 const keys = require("./keys.js");
 const Spotify = require("node-spotify-api");
+//Variales======================================
 const spotify = new Spotify(keys.spotifyKeys);
+
 let request = process.argv[2];
 let query = process.argv[3];
+//function for spotify=====================================================
 function spotifySongInfo() {
   spotify.search({ type: "track", query: query }, function(err, data) {
     if (err) {
@@ -21,6 +26,7 @@ function spotifySongInfo() {
     console.log("Album Name: " + data.tracks.items[0].album.name);
   });
 }
+//function for concert========================================
 function concertVenue() {
   let artist = query;
   axios
@@ -36,9 +42,13 @@ function concertVenue() {
         "Location: " + response.data.events[0].venue.display_location
       );
       // Date of the Event (use moment to format this as "MM/DD/YYYY")
-      console.log("Date: " + response.data.events[0].datetime_utc);
+      console.log(
+        "Date: " +
+          moment().format("MM/DD/YYYY", response.data.events[0].datetime_utc)
+      );
     });
 }
+//function for movie====================================
 function movieInfo() {
   let movie = query;
   axios
