@@ -24,21 +24,24 @@ if (process.argv[2] == "movie-this") {
     });
 }
 // MUSIC API=========================================================
-//
-// Name of the venue
-// Venue location
-// Date of the Event (use moment to format this as "MM/DD/YYYY")
-//
+
 if (process.argv[2] == "concert-this") {
   let artist = process.argv[3];
   axios
     .get(
       "https://api.seatgeek.com/2/events?performers.slug=" +
         artist +
-        "&client_id=<MTg3MDE5NDJ8MTU3MDE2MzI1Mi41OA>"
+        "&client_id=MTg3MDE5NDJ8MTU3MDI0NzEzOC40Ng"
     )
     .then(function(response) {
-      console.log("The artist is " + response.data);
+      // console.log(response.data.venue.location);
+      console.log("Venue: " + response.data.events[0].venue.name);
+      console.log(
+        "Location: " + response.data.events[0].venue.display_location
+      );
+      // Date of the Event (use moment to format this as "MM/DD/YYYY")
+      console.log("Date: " + response.data.events[0].datetime_utc);
+      // console.log(response.data);
     });
 }
 //SPOTIFY=============================================================
